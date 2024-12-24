@@ -38,9 +38,11 @@ function Hero() {
         </p>
 
         {/* Shop Now Button */}
+        <Link href="/Pages/ShopList">
           <button className="px-6 py-3 bg-[#FB2E86] text-white font-medium rounded-md shadow-md hover:bg-red-600 transition duration-300">
             Shop Now
           </button>
+          </Link>
       </div>
 
       {/* Right Section (Sofa Image) */}
