@@ -11,6 +11,9 @@ import { useState } from "react";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pagesDropdownOpen, setPagesDropdownOpen] = useState(false);
+  const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
+
 
   return (
     <header className="font-sans border-b relative">
@@ -68,84 +71,88 @@ export function Header() {
           <nav
             className={`${
               menuOpen ? "block" : "hidden"
-            } absolute md:relative top-full md:top-auto left-0 md:left-auto w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none z-10 md:flex items-center gap-6 flex-col md:flex-row md:items-center`}
+            } absolute md:relative top-full md:top-auto left-0 md:left-auto w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none z-10 md:flex items-center gap-6 flex-col md:flex-row`}
           >
             <Link href="/" className="font-medium py-2 md:py-0 px-4 md:px-0 text-pink-600">
-              Home<select></select>
+              Home
             </Link>
 
+            {/* Pages Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setPagesDropdownOpen(!pagesDropdownOpen)}
+                className="font-medium py-0 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600"
+              >
+                Pages
+              </button>
+              {pagesDropdownOpen && (
+                <div className="absolute bg-black-600 shadow-lg rounded-lg top-full left-0 mt-0">
+                  <Link
+                    href="/Pages/About-us"
+                    className="px-2 py-1 bg-black text-white font-bold hover:bg-pink-400"
+                  >
+                    About-us
+                  </Link>
+                  <Link
+                    href="/Pages/FAQ"
+                    className="px-2 py-1 bg-black text-white font-bold hover:bg-pink-400"
+                  >
+                    FAQ
+                  </Link>
+                  <Link
+                    href="/Pages/Ordercomplete"
+                    className="px-2 py-1 bg-black text-white font-bold hover:bg-pink-400"
+                  >
+                    OrderComplete
+                  </Link>
+                </div>
+              )}
+            </div>
 
-<div className="relative group">
-{/* Main page Link */}
-<Link
-    href=""
-    className="font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600">
-    Pages
-  </Link>
-
-  {/* Dropdown Menu */}
-  <div className="absolute hidden bg-white shadow-lg rounded-lg group-hover:block top-full left-0 mt-2">
-
-  <Link
-  href="/Pages/About-us"
-  className="block px-2 py-1 text-blue-900 font-bold underline hover:bg-pink-400 whitespace-nowrap">
-  About-us
-</Link>
-
-<Link
-      href="/Pages/FAQ"
-      className="block px-2 py-1 text-blue-900 font-bold underline hover:bg-pink-400 whitespace-nowrap">
-      FAQ
-    </Link>
-  
-
-  <Link
-      href="/Pages/Ordercomplete"
-      className="block px-2 py-1 text-blue-900 font-bold underline hover:bg-pink-400 whitespace-nowrap">
-      OrderComplete
-    </Link>
-  </div>
-  </div>
-  
-
-
-            
-            <Link href="/Pages/Product" className='font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600'>
+            <Link href="/Pages/Product" className="font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600">
               Products
             </Link>
-            <Link href="/Pages/Blog" className='font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600'>
+
+            <Link href="/Pages/Blog" className="font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600">
               Blog
             </Link>
-            <div className="relative group">
-  {/* Main Shop Link */}
-  <Link
-    href=""
-    className="font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600">
-    Shop
-  </Link>
 
-  {/* Dropdown Menu */}
-  <div className="absolute hidden bg-white shadow-lg rounded-lg group-hover:block top-full left-0 mt-2">
+            {/* Shop Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShopDropdownOpen(!shopDropdownOpen)}
+                className="font-medium py-0 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600"
+              >
+                Shop
+              </button>
+              {shopDropdownOpen && (
+                <div className="absolute bg-white shadow-lg rounded-lg top-full left-0 mt-2">
+                  <Link
+                    href="/Pages/ShoppingCart"
+                    className="px-2 py-1 bg-black text-white font-bold hover:bg-pink-400"
+                  >
+                    ShoppingCart
+                  </Link>
+                  <Link
+                    href="/Pages/ShopList"
+                    className="px-2 py-1 bg-black text-white font-bold hover:bg-pink-400"
+                  >
+                    ShopList
+                  </Link>
+                  <Link
+                    href="/Pages/ShopGridDefault"
+                    className="px-2 py-1 bg-black text-white font-bold hover:bg-pink-400"
+                  >
+                    ShopGridDefault
+                  </Link>
+                </div>
+              )}
+            </div>
 
-  <Link
-  href="/Pages/ShopList"
-  className="block px-2 py-1 text-blue-900 font-bold underline hover:bg-pink-400 whitespace-nowrap">
-  ShopList
-</Link>
-
-    <Link
-      href="/Pages/ShopGridDefault"
-      className="block px-2 py-1 text-blue-900 font-bold underline hover:bg-pink-400 whitespace-nowrap">
-      ShopGridDefault
-    </Link>
-  </div>
-</div>
-
-            <Link href="/Pages/Contact-us" className='font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600'>
-            Contact
+            <Link href="/Pages/Contact-us" className="font-medium py-2 md:py-0 px-4 md:px-0 hover:underline hover:text-pink-600">
+              Contact
             </Link>
           </nav>
-
           {/* Search and Mobile Menu */}
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center">
@@ -182,5 +189,6 @@ export function Header() {
     </header>
   );
 }
+
 
 

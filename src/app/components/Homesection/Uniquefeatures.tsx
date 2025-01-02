@@ -1,5 +1,6 @@
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const data = [
@@ -53,9 +54,11 @@ const Unique = () => {
             ))}
           </div>
           <div className="flex flex-col md:flex-row items-center mt-6 gap-4">
+          <Link href="/Pages/ShoppingCart">
           <button className="px-6 py-3 bg-[#FB2E86] text-white font-medium rounded-md shadow-md hover:bg-red-600 transition duration-300">
             Add To Cart
           </button>
+          </Link>
             <div className="flex flex-col items-center md:items-start text-[#151875] text-[14px]">
               <p className="font-bold">B&B Italian Sofa</p>
               <p>$32.00</p>

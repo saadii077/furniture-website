@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { GiCheckMark } from "react-icons/gi";
 
 const checktext = [
@@ -60,9 +61,11 @@ const Discount = () => {
               </div>
             ))}
           </div>
+          <Link href="/Pages/ShopList">
           <p className="flex justify-center items-center bg-pink-600 hover:bg-red-600 w-[200px] h-[50px] text-white jon mt-8 mx-auto lg:mx-0">
             Shop Now
           </p>
+          </Link>
         </div>
         <div>
           <Image

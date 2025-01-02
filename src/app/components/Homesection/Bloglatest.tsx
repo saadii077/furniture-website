@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 function BlogSection() {
   const blogs = [
@@ -75,12 +76,14 @@ function BlogSection() {
             <p className="text-gray-700 mt-2 px-4 text-left">{blog.description}</p>
 
             {/* Read More */}
+            <Link href="/Pages/Blog">
             <button
-              className="underline text-base font-bold mt-4 px-4 mb-4 self-start"
+              className="underline text-base font-bold mt-4 px-4 mb-4 self-start hover:bg-purple-400"
               style={{ color: blog.titleColor }}
             >
               Read More
             </button>
+            </Link>
           </div>
         ))}
       </div>

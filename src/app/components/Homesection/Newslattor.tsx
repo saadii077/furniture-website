@@ -20,10 +20,11 @@ function Newslater() {
             <h2 className="text-4xl font-bold text-blue-900 mb-6">
              Our Newsletter
           </h2>
-
+          <Link href="/Pages/ShopGridDefault">
           <button className="px-6 py-3 bg-[#FB2E86] text-white font-medium rounded-md shadow-md hover:bg-red-600 transition duration-300">
             Shop Now
           </button>
+          </Link>
         </div>
       </div>
 
