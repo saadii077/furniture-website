@@ -139,12 +139,12 @@ const ShopList = () => {
           className="text-sm font-medium text-blue-700 flex items-center"
         >
           <span>View:</span>
-          <img
+          <Image
             className="ml-2 h-5 w-5"
             src="/pages-images/shoplistvector2.png"
             alt="Grid view"
           />
-          <img
+          <Image
             className="ml-2 h-5 w-5"
             src="/pages-images/vector shoplist.png"
             alt="List view"

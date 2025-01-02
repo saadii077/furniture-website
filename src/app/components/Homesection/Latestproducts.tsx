@@ -47,7 +47,7 @@ function LatestProducts() {
               {/* Sale Tag */}
               {product.sale && (
                 <span className="absolute top-2 left-2 bg-[#3F509E] text-white text-xs sm:text-sm px-1 py-0 rounded">
-                  <img src="Group 27.png" alt="Sale" />
+                  <Image src="Group 27.png" alt="Sale" />
                 </span>
               )}
               <Image
