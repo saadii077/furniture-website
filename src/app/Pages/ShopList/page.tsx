@@ -3,6 +3,9 @@ import Link from "next/link";
 import { FaRegHeart,  FaSearchPlus } from "react-icons/fa";
 import { CgShoppingCart } from "react-icons/cg";
 
+
+
+
 const shoplist = [
   {
     id: 1,
@@ -74,8 +77,10 @@ const shoplist = [
 
 const ShopList = () => {
  return (
+  
  
-  <> 
+  <>
+
     <section className="bg-[#F6F5FF] py-8 mt-8">
         <div className="container mx-auto flex flex-col items-center md:items-start justify-center gap-4 py-10 px-4 md:px-8">
           <h1 className="text-[#101750] text-4xl md:text-4xl font-bold text-center md:text-left">
@@ -143,11 +148,15 @@ const ShopList = () => {
             className="ml-2 h-5 w-5"
             src="/pages-images/shoplistvector2.png"
             alt="Grid view"
+            width={20}
+            height={20}
           />
           <Image
             className="ml-2 h-5 w-5"
             src="/pages-images/vector shoplist.png"
             alt="List view"
+            width={20}
+            height={20}
           />
         </label>
         <input

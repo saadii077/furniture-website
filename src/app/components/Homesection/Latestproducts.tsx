@@ -1,96 +1,145 @@
-'use client';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { BsCart2 } from "react-icons/bs";
+import { FaRegHeart, FaHeart, FaSearchPlus } from "react-icons/fa";
+import { useWishlist } from "@/context/WishlistContext";
+import { useShoppingCart } from "use-shopping-cart";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import Image from 'next/image';
-import { FaShoppingCart } from "react-icons/fa";
-import { HiMiniMagnifyingGlassCircle } from "react-icons/hi2";
-import { GoHeartFill } from "react-icons/go";
+interface Product {
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+  stockLevel: number;
+  category: string;
+  discountPercentage: number;
+}
 
-function LatestProducts() {
-  const products = [
-    { id: 1, img: "/latest one.png" },
-    { id: 2, img: "/latest two.png", sale: true },
-    { id: 3, img: "/latest three.png" },
-    { id: 4, img: "/latest four.png" },
-    { id: 5, img: "/latest five.png" },
-    { id: 6, img: "/latest six.png" },
-  ];
+interface Props {
+  data: Product[];
+}
+
+function LatestProduct({ data }: Props) {
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { addItem } = useShoppingCart();
+
+  // Function to handle adding item to cart
+  const handleAddToCart = (item: Product) => {
+    addItem({
+      id: item._id,
+      name: item.name,
+      price: item.price,
+      currency: "USD",
+      image: item.image,
+    });
+
+    toast.success(`${item.name} added to cart!`, {
+      position: "top-center", // ✅ Centered toast
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   return (
-    <div className="w-full bg-white py-10 sm:py-16 md:py-20">
-      {/* Heading */}
-      <h2 className="text-[#3F509E] text-2xl sm:text-3xl md:text-4xl text-center font-bold mb-6 sm:mb-8 md:mb-10">
-        Latest Products
-      </h2>
-
-      {/* Tabs */}
-      <div className="flex justify-center space-x-4 sm:space-x-8 mb-10 sm:mb-12 md:mb-16">
-        {["New Arrival", "Best Seller", "Featured", "Special Offers"].map((tab) => (
-          <button
-            key={tab}
-            className="text-[#3F509E] text-sm sm:text-base md:text-lg font-medium relative group hover:text-[#FB2E86]"
-          >
-            {tab}
-            {/* Underline */}
-            <span
-              className="absolute left-0 bottom-0 w-0 h-[2px] bg-[#FB2E86] transition-all duration-300 group-hover:w-full"
-            ></span>
-          </button>
-        ))}
+    <div className="max-w-[1920px] mx-2 sm:mx-10 lg:mx-32 xl:mx-20 my-20">
+      {/* Header */}
+      <div className="flex flex-col items-center justify-center my-5 text-center">
+        <h1 className="text-[32px] sm:text-[36px] lg:text-[42px] font-[700] text-[#151875] leading-[40px] sm:leading-[45px] lg:leading-[49.22px]">
+          Latest Products
+        </h1>
+        <div className="flex flex-wrap justify-center gap-4 py-3">
+          <h2 className="text-[#FB4997] underline cursor-pointer">New Arrival</h2>
+          <h2 className="text-[#151875] cursor-pointer">Best Seller</h2>
+          <h2 className="text-[#151875] cursor-pointer">Special Offer</h2>
+        </div>
       </div>
 
       {/* Product Grid */}
-      <div className="w-full max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-        {products.map((product) => (
-          <div key={product.id} className="relative group">
-            {/* Product Image */}
-            <div className="w-full bg-gray-200 flex justify-center items-center relative overflow-hidden h-[200px] sm:h-[250px] md:h-[300px] transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:bg-[#F3F3F3]">
-              {/* Sale Tag */}
-              {product.sale && (
-                <span className="absolute top-2 left-2 bg-[#3F509E] text-white text-xs sm:text-sm px-1 py-0 rounded">
-                  <Image src="Group 27.png" alt="Sale" />
-                </span>
-              )}
-              <Image
-                src={product.img}
-                width={200}
-                height={200}
-                alt="Comfy Handy Craft"
-                className="object-contain"
-              />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-y-8 gap-x-4 sm:gap-x-6 lg:gap-x-8 mx-auto">
+        {data.map((item) => {
+          const isWishlisted = wishlist.some((product) => product._id === item._id);
 
-              {/* Icons */}
-              <div className="absolute top-1/2 left-2 transform -translate-y-1/2 flex flex-col space-y-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button className="bg-white p-2 rounded-full shadow">
-                  <GoHeartFill className="w-5 sm:w-6 h-5 sm:h-6 text-[#3F509E]" />
-                </button>
-                <button className="bg-white p-2 rounded-full shadow">
-                  <HiMiniMagnifyingGlassCircle className="w-5 sm:w-6 h-5 sm:h-6 text-[#3F509E]" />
-                </button>
-                <button className="bg-white p-2 rounded-full shadow">
-                  <FaShoppingCart className="w-5 sm:w-6 h-5 sm:h-6 text-[#3F509E]" />
-                </button>
-              </div>
-            </div>
+          return (
+            <Link key={item._id} href={`/products/${item._id}`}>
+              <div className="w-full sm:w-[270px] mx-auto px-10 md:px-0 lg:w-[360px] flex flex-col justify-center items-center">
+                {/* Image Section */}
+                <div className="w-full group h-[200px] sm:h-[220px] lg:h-[270px] bg-[#F7F7F7] flex justify-center items-center relative">
+                  <div className="opacity-0 group-hover:opacity-100 absolute top-4 left-4">
+                    <Image src={"/Group 27.png"} alt="sale" width={60} height={60} className="object-contain" />
+                  </div>
 
-            {/* Product Details */}
-            <div className="text-center mt-4">
-              <h3 className="text-sm sm:text-base md:text-lg font-semibold text-[#3F509E]">
-                Comfy Handy Craft
-              </h3>
-              <div className="mt-2 text-gray-600 flex justify-center items-center gap-2">
-                <span className="text-red-600 font-medium line-through text-xs sm:text-sm">
-                  $65.00
-                </span>
-                <span className="text-gray-800 text-sm sm:text-base">
-                  $42.00
-                </span>
+                  <div className="flex flex-col justify-start opacity-0 group-hover:opacity-100 gap-4 py-2">
+                    {/* Cart Button */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAddToCart(item);
+                      }}
+                    >
+                      <BsCart2 size={20} className="text-[#2F1AC4] cursor-pointer" />
+                    </button>
+
+                    {/* Wishlist Icon */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        isWishlisted ? removeFromWishlist(item._id) : addToWishlist(item);
+                      }}
+                      className="text-[#FB2448] cursor-pointer"
+                    >
+                      {isWishlisted ? <FaHeart size={20} className="text-red-500" /> : <FaRegHeart size={20} />}
+                    </button>
+
+                    <FaSearchPlus size={20} className="text-[#4A8BA0] cursor-pointer" />
+                  </div>
+
+                  <Image
+                    src={item.image}
+                    width={2000}
+                    height={2000}
+                    alt={item.name}
+                    className="w-[150px] sm:w-[180px] lg:w-[220px] object-contain"
+                  />
+                </div>
+
+                {/* Product Details */}
+                <div className="flex flex-col items-center text-center py-4">
+                  <h3 className="text-[#151875] text-[16px] line-clamp-1 sm:text-[18px] font-medium">
+                    {item.name}
+                  </h3>
+                  <div className="flex justify-center items-center gap-x-4 py-2">
+                    <p className="text-[#151875]">
+                      ${item.price - (item.price * item.discountPercentage) / 100}
+                    </p>
+                    <p className="text-[#FB2448] line-through">${item.price}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </Link>
+          );
+        })}
       </div>
+
+      {/* Toast Notification Container */}
+      <ToastContainer
+        position="top-center" // ✅ Centered toast notifications
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        limit={1} // ✅ Prevents multiple toasts at the same time
+        style={{ textAlign: "center", fontSize: "16px" }} // ✅ Custom styling
+      />
     </div>
   );
 }
 
-export default LatestProducts;
+export default LatestProduct;

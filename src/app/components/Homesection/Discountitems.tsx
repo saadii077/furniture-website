@@ -23,7 +23,7 @@ const checktext = [
 
 const Discount = () => {
   return (
-    <section className="mt-20 container">
+    <section className="mt-20 px-4 sm:px-8 lg:px-16 xl:px-32">
       <h1 className="text-4xl text-center jon font-bold text-blue-900">
         Discount Items
       </h1>
@@ -39,13 +39,11 @@ const Discount = () => {
         </p>
       </div>
       <div className="flex justify-center items-center mt-10 gap-10 lg:flex-row flex-col text-center lg:text-start">
-        <div>
+        <div className="lg:max-w-[50%]">
           <h1 className="text-blue-900 lg:text-4xl text-3xl font-bold jon">
             20% Discount Of All Products
           </h1>
-          <h2 className="text-xl text-pink-600 jon mt-4">
-            Eams Sofa Compact
-          </h2>
+          <h2 className="text-xl text-pink-600 jon mt-4">Eams Sofa Compact</h2>
           <p className="text-slate-500 lato text-[17px] mt-4 text-wrap">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu eget
             feugiat habitasse nec, bibendum condimentum.
@@ -62,12 +60,12 @@ const Discount = () => {
             ))}
           </div>
           <Link href="/Pages/ShopList">
-          <p className="flex justify-center items-center bg-pink-600 hover:bg-red-600 w-[200px] h-[50px] text-white jon mt-8 mx-auto lg:mx-0">
-            Shop Now
-          </p>
+            <p className="flex justify-center items-center bg-pink-600 hover:bg-red-600 w-[200px] h-[50px] text-white jon mt-8 mx-auto lg:mx-0">
+              Shop Now
+            </p>
           </Link>
         </div>
-        <div>
+        <div className="lg:max-w-[50%]">
           <Image
             src={"/tortuga-01-b 1.png"}
             alt="sofa-img"

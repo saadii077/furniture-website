@@ -2,6 +2,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 function TrendingProducts() {
   const products = [
@@ -53,9 +54,12 @@ function TrendingProducts() {
         <div className="bg-pink-100 p-8 flex flex-col justify-between relative h-[250px] shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:bg-pink-100">
           <h3 className="text-[#3F509E] text-2xl font-bold mb-2">23% Off in all products</h3>
           <div className="flex justify-start mb-40">
+ 
+ <Link href="/Pages/ShoppingCart">
   <button className="text-pink-600 underline text-lg font-medium hover:text-red-600">
     Shop Now
   </button>
+  </Link>
 </div>
           <Image
             src="/clock.png"
@@ -71,9 +75,12 @@ function TrendingProducts() {
           <h3 className="text-[#3F509E] text-2xl font-bold mb-4">23% Off in all products</h3>
    {/* Button */}
    <div className="flex justify-start mb-40">
+
+    <Link href="/Pages/ShopList">
   <button className="text-pink-600 underline text-lg font-medium hover:text-red-600">
     View Collection
   </button>
+  </Link>
 </div>
 
           <Image

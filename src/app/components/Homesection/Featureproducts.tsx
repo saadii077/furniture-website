@@ -1,114 +1,148 @@
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { BsCart2 } from "react-icons/bs";
+import { FaRegHeart, FaHeart, FaSearchPlus } from "react-icons/fa";
+import { useWishlist } from "@/context/WishlistContext";
+import { useShoppingCart } from "use-shopping-cart";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useCallback } from "react";
 
-'use client';
+interface Product {
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+  stockLevel: number;
+  category: string;
+  discountPercentage: number;
+}
 
-import Image from 'next/image';
-import { FaShoppingCart } from "react-icons/fa";
-import { HiMiniMagnifyingGlassCircle } from "react-icons/hi2";
-import { GoHeartFill } from "react-icons/go";
+interface Props {
+  data: Product[];
+}
 
-function FeaturedProducts() {
-  const products = [
-    {
-      id: 1,
-      img: "/featured 1.png",
-      name: "Cantilever Chair",
-      code: "Y523201",
-      price: "$42.00",
+function Featured({ data }: Props) {
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { addItem } = useShoppingCart();
+  const featuredProducts = data.slice(0, 4);
+
+  // Function to handle adding item to cart
+  const handleAddToCart = useCallback(
+    (item: Product) => {
+      addItem({
+        id: item._id,
+        name: item.name,
+        price: item.price,
+        currency: "USD",
+        image: item.image,
+      });
+
+      toast.success(`${item.name} added to cart!`, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     },
-    {
-      id: 2,
-      img: "/featured 2.png",
-      name: "Cantilever Chair",
-      code: "Y523201",
-      price: "$42.00",
-    },
-    {
-      id: 3,
-      img: "/featured 3.png",
-      name: "Cantilever Chair",
-      code: "Y523201",
-      price: "$42.00",
-    },
-    {
-      id: 4,
-      img: "/featrued 4.png",
-      name: "Cantilever Chair",
-      code: "Y523201",
-      price: "$42.00",
-    },
-  ];
+    [addItem]
+  );
 
   return (
-    <div className="w-full bg-white py-20">
-      {/* Heading */}
-      <h2 className="text-blue-900 text-4xl text-center mb-16 font-bold">Featured Products</h2>
+    <div className="max-w-[1920px] px-2 sm:mx-10 lg:mx-32 xl:mx-auto my-20">
+      <h1 className="text-center text-[32px] sm:text-[36px] lg:text-[42px] font-semibold py-6 leading-tight text-[#1A0B5B]">
+        Featured Products
+      </h1>
 
-      {/* Product Grid */}
-      <div className="w-full max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {products.map((product) => (
-          <div key={product.id} className="relative group shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:bg-[#F3F3F3]">
-            {/* Product Image with Icons */}
-            <div className="w-full bg-gray-200 flex justify-center items-center relative overflow-hidden h-[400px]">
-              {/* Product Image */}
-              <Image
-                src={product.img}
-                width={200}
-                height={250}
-                alt={product.name}
-                className="object-cover w-[200px] h-[250px] transition-all duration-300 group-hover:scale-105"
-              />
+      <div className="grid items-center sm:w-fit w-full px-10 grid-cols-1 gap-16 sm:grid-cols-2 xl:grid-cols-4 mx-auto">
+        {featuredProducts.map((item) => {
+          const isWishlisted = wishlist.some(
+            (product) => product._id === item._id
+          );
 
-              {/* Icons (Wishlist, View Details, and Zoom) */}
-              <div className="absolute top-2 left-2 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {/* Wishlist Icon */}
-                <button className="bg-white p-2 rounded-full">
-                <GoHeartFill  className="w-6 h-6 text-red-500" />
-                </button>
-                {/* Magnifying Glass Icon */}
-                <button className="bg-white p-2 rounded-full">
-                <HiMiniMagnifyingGlassCircle
-                className="w-6 h-6 text-blue-700" />
-                </button>
-                {/* Cart Icon */}
-                <button className="bg-white p-2 rounded-full">
-                <FaShoppingCart  className="w-6 h-6 text-gray-700" />
-                </button>
-              </div>
+          return (
+            <div
+              key={item._id}
+              className="relative group w-full sm:w-[270px] flex justify-center items-center flex-col shadow-lg shadow-[#e1dfdf] transition-transform duration-300 hover:scale-105"
+            >
+              <Link href={`/products/${item._id}`} className="w-full">
+                <div className="bg-[#F6F7FB] w-full sm:w-[270px] h-[236px] flex justify-center items-center mx-auto relative">
+                  <div className="absolute top-4 left-3 flex gap-x-4">
+                    {/* Cart Button */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAddToCart(item);
+                      }}
+                      aria-label="Add to Cart"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      <BsCart2
+                        size={20}
+                        className="text-[#2F1AC4] cursor-pointer"
+                      />
+                    </button>
 
-              {/* Add to Cart Button */}
-              <div className="absolute bottom-0 w-full text-white text-center py-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="w-40 py-4 text-sm bg-[#08D15F] rounded-none hover:bg-green-900 transition-colors">
-                  View Details
-                </button>
+                    <FaSearchPlus
+                      size={20}
+                      className="text-[#4a8ba0] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </div>
+
+                  {/* Wishlist Icon */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      isWishlisted
+                        ? removeFromWishlist(item._id)
+                        : addToWishlist(item);
+                    }}
+                    aria-label={
+                      isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"
+                    }
+                    className="absolute top-4 right-3 text-[#5ca3bb] hover:text-[#ff0000] transition-colors duration-300"
+                  >
+                    {isWishlisted ? (
+                      <FaHeart size={20} className="text-red-500" />
+                    ) : (
+                      <FaRegHeart size={20} />
+                    )}
+                  </button>
+
+                  <Image
+                    src={item.image}
+                    width={2000}
+                    height={2000}
+                    alt={item.name}
+                    className="w-[178px] object-cover"
+                  />
+                </div>
+              </Link>
+
+              <div className="bg-opacity-0 group-hover:bg-[#2F1AC4] w-full text-white transition-colors duration-300">
+                <div className="py-4 px-3 text-center">
+                  <p className="set_lato py-2 text-[#FB2E86] group-hover:text-white font-bold text-lg">
+                    {item.name}
+                  </p>
+
+                  <p className="set_lato text-[#2F1AC4] group-hover:text-white py-2 text-lg">
+                    ${item.price}
+                  </p>
+                </div>
               </div>
             </div>
-
-            {/* Product Details */}
-            <div className="text-center mt-0 hover:bg-purple-300">
-              <h3 className="text-lg font-semibold text-red-500">{product.name}</h3>
-              <div className="flex justify-center items-center gap-1 mt-1">
-                <span className="text-[#05E6B7] text-4xl">-</span>
-                <span className="text-[#F701A8] text-4xl">-</span>
-                <span className="text-[#00009D] text-4xl">-</span>
-              </div>
-              <p className="mt-2 text-sm text-gray-600">Code - {product.code}</p>
-              <p className="mt-1 text-dark-blue-900">{product.price}</p>
-
-            </div>
-          </div>
-          
-          
-        ))}
+          );
+        })}
       </div>
-      <div className="flex gap-2 items-center justify-center p-4">
-          
-          <button className="w-[24px] h-[4px] rounded-[10px] bg-[#F701A8]"></button>
-          <button className="w-[16px] h-[4px] rounded-[10px] bg-[#FEBAD7]"></button>
-          <button className="w-[16px] h-[4px] rounded-[10px] bg-[#FEBAD7]"></button>
-          <button className="w-[16px] h-[4px] rounded-[10px] bg-[#FEBAD7]"></button>
-        </div>
+
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 }
 
-export default FeaturedProducts;
+export default Featured;
