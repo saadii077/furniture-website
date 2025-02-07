@@ -40,18 +40,18 @@ export default function RootLayout({
         >
           <CartProvider>
             <WishlistProvider> {/* ✅ Wrapped with WishlistProvider */}
-            <ShippingProvider>
-              <div className="max-w-[1920px] mx-auto">
-                <Header />
-                <Navbar />
-                <Toaster />
-                {children}
-                <Footer />
-              </div>
+              <ShippingProvider>
+                <div className="max-w-[1920px] mx-auto">
+                  <Header />
+                  <Navbar />
+                  <Toaster />
+                  {children}
+                  <Footer />
+                </div>
               </ShippingProvider>
             </WishlistProvider>
           </CartProvider>
-          
+
         </body>
       </html>
     </ClerkProvider>
